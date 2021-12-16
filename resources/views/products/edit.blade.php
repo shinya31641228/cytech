@@ -7,7 +7,7 @@
     </div>
     @endif
     <div class="row justify-content-center">
-        <form method="POST" action="{{ route('update')}}" onsubmit="return checkSubmit()" class="card p-4" enctype="multipart/form-data">
+        <form method="POST" action="{{ route('update') }}" onsubmit="return checkSubmit()" class="card p-4" enctype="multipart/form-data">
             @csrf
             <div class="col-md-4 mb-3">
                 <input type="hidden" name="id" value="{{ $product->id }}">
@@ -16,7 +16,7 @@
                 <input id="products_name" name="products_name" type="text" class="form-control" id="productName" value="{{ $product->products_name }}">
                 @if ($errors->has('products_name'))
                 <div class="text-danger">
-                    {{ $errors->first('products_name')}}
+                    {{ $errors->first('products_name') }}
                 </div>
                 @endif
             </div>
@@ -29,7 +29,7 @@
                 <input id="price" name="price" type="number" class="form-control" value="{{ $product->price }}">
                 @if ($errors->has('price'))
                 <div class="text-danger">
-                    {{ $errors->first('price')}}
+                    {{ $errors->first('price') }}
                 </div>
                 @endif
             </div>
@@ -38,7 +38,7 @@
                 <input id="stock" name="stock" type="number" class="form-control" value="{{ $product->stock }}">
                 @if ($errors->has('stock'))
                 <div class="text-danger">
-                    {{ $errors->first('stock')}}
+                    {{ $errors->first('stock') }}
                 </div>
                 @endif
             </div>
@@ -47,7 +47,7 @@
                 <textarea id="comment" name="comment" class="form-control" id="exampleFormControlTextarea1" rows=" 5">{{ $product->comment }}</textarea>
                 @if ($errors->has('comment'))
                 <div class="text-danger">
-                    {{ $errors->first('comment')}}
+                    {{ $errors->first('comment') }}
                 </div>
                 @endif
             </div>
@@ -56,7 +56,7 @@
                 <input id="image" name="image" class="form-control" type="file">
                 @if ($errors->has('image'))
                 <div class="text-danger">
-                    {{ $errors->first('image')}}
+                    {{ $errors->first('image') }}
                 </div>
                 @endif
             </div>

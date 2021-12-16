@@ -36,4 +36,4 @@ Route::post('/product/update', [ProductsController::class, 'exeUpdate'])->name('
 //商品を削除する
 Route::post('/product/delete/{id}', [ProductsController::class, 'delete'])->name('delete');
 //検索ボタンを押すとのSearchメソッドを実行する
-Route::get('/product/search', [ProductsController::class,'Search'])->name('search');
+Route::get('/product/search', [ProductsController::class,'searchList'])->name('search');

@@ -7,7 +7,7 @@
     </div>
     @endif
     <div class="justify-content-center">
-        <form method="POST" action="{{ route('store')}}" onsubmit="return checkSubmit()" class="p-4 card" enctype="multipart/form-data">
+        <form method="POST" action="{{ route('store') }}" onsubmit="return checkSubmit()" class="p-4 card" enctype="multipart/form-data">
             @csrf
             <input type="hidden" name="user_id" value="{{ $user->id }}">
             <div class="col-md-4 mb-3">
@@ -15,7 +15,7 @@
                 <input id="products_name" name="products_name" type="text" class="form-control" id="productName">
                 @if ($errors->has('products_name'))
                 <div class="text-danger">
-                    {{ $errors->first('products_name')}}
+                    {{ $errors->first('products_name') }}
                 </div>
                 @endif
             </div>
@@ -24,7 +24,7 @@
                 {{ Form::select('company_id', $companies, null, ['class' => 'form-select']) }}
                 @if ($errors->has('company_id'))
                 <div class="text-danger">
-                    {{ $errors->first('company_id')}}
+                    {{ $errors->first('company_id') }}
                 </div>
                 @endif
             </div>
@@ -33,7 +33,7 @@
                 <input id="price" name="price" type="number" class="form-control">
                 @if ($errors->has('price'))
                 <div class="text-danger">
-                    {{ $errors->first('price')}}
+                    {{ $errors->first('price') }}
                 </div>
                 @endif
             </div>
@@ -42,7 +42,7 @@
                 <input id="stock" name="stock" type="number" class="form-control">
                 @if ($errors->has('stock'))
                 <div class="text-danger">
-                    {{ $errors->first('stock')}}
+                    {{ $errors->first('stock') }}
                 </div>
                 @endif
             </div>
@@ -51,7 +51,7 @@
                 <textarea id="comment" name="comment" class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
                 @if ($errors->has('comment'))
                 <div class="text-danger">
-                    {{ $errors->first('comment')}}
+                    {{ $errors->first('comment') }}
                 </div>
                 @endif
             </div>
@@ -60,7 +60,7 @@
                 <input id="image" name="image" class="form-control" type="file">
                 @if ($errors->has('image'))
                 <div class="text-danger">
-                    {{ $errors->first('image')}}
+                    {{ $errors->first('image') }}
                 </div>
                 @endif
             </div>

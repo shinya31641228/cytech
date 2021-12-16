@@ -24,7 +24,10 @@ class ProductsController extends Controller
         //ログインしているユーザー情報を渡す
         $user = \Auth::user();
 
-        return view('products.create', ['user' => $user, 'companies' => $companies]);
+        return view('products.create', [
+            'user' => $user,
+            'companies' => $companies
+        ]);
     }
 
     /**
@@ -34,31 +37,8 @@ class ProductsController extends Controller
      */
     public function exeStore(Request $request)
     {
-        //画像ファイルパスを格納
-        $image_file_path = Product::getImageFilePath($request);
-        //商品データを受け取る
-        $inputs = $request->all();
-        //メーカー名をcompaniesテーブルから取得
-        $company_name = Company::find($inputs['company_id']);
-        \DB::beginTransaction();
-        try {
-            //商品を登録
-            Product::create([
-                'user_id' => $inputs['user_id'],
-                'products_name' => $inputs['products_name'],
-                'company_id' => $inputs['company_id'],
-                'company_name' => $company_name['company_name'],
-                'price' => $inputs['price'],
-                'stock' => $inputs['stock'],
-                'comment' => $inputs['comment'],
-                'image' => $image_file_path,
-            ]);
-            \DB::commit();
-        } catch (\Throwable $e) {
-            \DB::rollback();
-            abort(500);
-        }
-        \Session::flash('flash_message', '商品を登録しました');
+        $product = new Product;
+        $product->productRegistration($request);
 
         return redirect(route('create'));
     }
@@ -109,48 +89,24 @@ class ProductsController extends Controller
      */
     public function exeUpdate(Request $request)
     {
-
-        //画像ファイルパスを格納
-        $image_file_path = Product::getImageFilePath($request);
-        //商品データを受け取る
         $inputs = $request->all();
-        //companiesテーブルからcompany_nameを取得
-        $company_name = Company::find($inputs['company_id']);
-        \DB::beginTransaction();
-        try {
-            //商品を登録
-            $product = Product::find($inputs['id']);
-            // dd($product);
-            $product->fill([
-                'products_name' => $inputs['products_name'],
-                'company_id' => $inputs['company_id'],
-                'company_name' => $company_name['company_name'],
-                'price' => $inputs['price'],
-                'stock' => $inputs['stock'],
-                'comment' => $inputs['comment'],
-                'image' => $image_file_path,
-            ]);
-            $product->save();
-            \DB::commit();
-        } catch (\Throwable $e) {
-            \DB::rollback();
-            abort(500);
-        }
-        \Session::flash('flash_message', '商品を更新しました');
+
+        $update = new Product;
+        $update->productUpdate($request);
 
         return redirect('/product/edit/' . $inputs['id']);
     }
-
 
     /**
      * 商品を削除する
      * @param $request
      * @return view
      */
-    public function delete($id)
+    public function delete(Request $request, $id)
     {
-        //商品を削除
-        Product::where('id', $id)->update(['status' => 2]);
+        $product = new Product;
+        $product->productDelete($request,$id);
+
         return redirect(route('home'));
     }
 
@@ -159,37 +115,16 @@ class ProductsController extends Controller
      * @param $request
      * @return view
      */
-    public function Search(Request $request)
+    public function searchList(Request $request)
     {
-        //入力される値nameの中身を定義する
-        $search_word = $request->input('search_word'); //商品名の値
-        $company_id = $request->input('company_id'); //メーカーの値
-
-        $query = Product::query();
-
-        //商品名が入力された場合、productsテーブルから一致する商品を$queryに代入
-        if (isset($search_word)) {
-            $query->where('products_name', 'like', "%$search_word%");
-        }
-        //メーカーが選択された場合、productsテーブルからcompany_idが一致する商品を$queryに代入
-        if (isset($category_id)) {
-            $query->where('company_id', $company_id);
-        }
-
-        //$queryをcompany_idの昇順に並び替えて$productsに代入
-        $products = $query->where('status', 1)->get();
-
-        //m_categoriesテーブルからgetLists();関数でcategory_nameとidを取得する
-        $company = new Company();
-        $companies = $company->getLists();
-
-        \Session::flash('flash_message', '「' . $search_word . '」の検索結果' . count($products) . '件');
+        $product = new Product;
+        $searchProducts = $product->productSearch($request);
 
         return view('products.search', [
-            'products' => $products,
-            'companies' => $companies,
-            'search_word' => $search_word,
-            'company_id' => $company_id,
+            'products' => $searchProducts['products'],
+            'companies' => $searchProducts['companies'],
+            'search_word' => $searchProducts['search_word'],
+            'company_id' => $searchProducts['company_id'],
         ]);
     }
 }

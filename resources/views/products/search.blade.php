@@ -10,7 +10,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="d-flex justify-content-between bd-highlight mb-3">
-                <a class="btn btn-outline-success" href="{{ route('create')}}" role="button">商品登録</a>
+                <a class="btn btn-outline-success" href="{{ route('create') }}" role="button">商品登録</a>
                 <form method="GET" action="{{ route('search') }}">
                     @csrf
                     <div class="input-group">
@@ -32,33 +32,33 @@
                 @foreach($products as $product)
                 <div class="col-3 mb-5">
                     <div class="card" style="width: 18rem;">
-                        <img src="{{ '/storage/'. $product->image}}" class="card-img-top" alt="...">
+                        <img src="{{ '/storage/'. $product->image }}" class="card-img-top" alt="...">
                         <div class="card-body">
                             <table class="table">
                                 <tbody>
                                     <tr class="border-bottom">
                                         <td>商品ID</td>
-                                        <td>{{ $product->id}}</td>
+                                        <td>{{ $product->id }}</td>
                                     </tr>
                                     <tr class="border-bottom">
                                         <td>商品名</td>
-                                        <td>{{ $product->products_name}}</td>
+                                        <td>{{ $product->products_name }}</td>
                                     </tr>
                                     <tr class="border-bottom">
                                         <td>メーカー</td>
-                                        <td>{{ $product->company_name}}</td>
+                                        <td>{{ $product->company_name }}</td>
                                     </tr>
                                     <tr class="border-bottom">
                                         <td>価格</td>
-                                        <td>{{ $product->price}}円</td>
+                                        <td>{{ $product->price }}円</td>
                                     </tr>
                                     <tr class="border-bottom">
                                         <td>在庫</td>
-                                        <td>{{ $product->stock}}</td>
+                                        <td>{{ $product->stock }}</td>
                                     </tr>
                                 </tbody>
                             </table>
-                            <p>コメント：{{ $product->comment}}</p>
+                            <p>コメント：{{ $product->comment }}</p>
                             <form method="POST" action="/product/delete/{{ $product->id }}" onsubmit="return checkSubmit()">
                                 @csrf
                                 <a href="/product/detail/{{ $product->id }}" class="btn btn-outline-primary">詳細</a>
